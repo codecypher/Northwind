@@ -1,0 +1,117 @@
+﻿@*model IEnumerable<Northwind.Models.Customer>*@
+@model Northwind.Models.CustomerIndexVM
+
+@*model PagedList.IPagedList<Northwind.Models.Customer>*@
+
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Customers";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@* Use FormMethod.Get so SearchString is added to URL so user can bookmark. *@
+@using (Html.BeginForm("Index", "Customers", FormMethod.Get))
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString", Model.CurrentFilter)
+        @Html.Hidden("Page", Model.Page)
+        @Html.Hidden("PageSize", Model.PageSize)
+        <input type="submit" value="Search" />
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>CustomerID</th>
+        <th>
+            @Html.ActionLink("Company Name", "Index", new { sortOrder = Model.CompanyNameSortParm, currentFilter = Model.CurrentFilter, pageSize = Model.PageSize })
+        </th>
+        <th>
+            @Html.ActionLink("Contact Name", "Index", new { sortOrder = Model.ContactNameSortParm, currentFilter = Model.CurrentFilter, pageSize = Model.PageSize })
+        </th>
+        <th>Contact Title</th>
+        <th>Address</th>
+        <th>City</th>
+        <th>Region</th>
+        <th>Postal Code</th>
+        <th>Country</th>
+        <th>Phone</th>
+        <th>Fax</th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.CustomerPagedList) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CustomerID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CompanyName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ContactName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ContactTitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.City)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Region)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PostalCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Country)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fax)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CustomerID as string, page = Model.Page.ToString(), pageSize = Model.PageSize.ToString() }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CustomerID as string, page = Model.Page.ToString(), pageSize = Model.PageSize.ToString() }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CustomerID as string, page = Model.Page.ToString(), pageSize = Model.PageSize.ToString() })
+        </td>
+    </tr>
+}
+
+</table>
+
+<br />
+Page @(Model.CustomerPagedList.PageCount < Model.CustomerPagedList.PageNumber ? 0 : Model.CustomerPagedList.PageNumber) of @Model.CustomerPagedList.PageCount
+
+@Html.PagedListPager(Model.CustomerPagedList, page => Url.Action("Index", 
+    new { sortOrder = Model.CurrentSort, currentFilter = Model.CurrentFilter, page, pagesize = Model.PageSize }))
+
+@Html.ActionLink("10", "Index", new { sortOrder = Model.SortOrder, currentFilter = Model.CurrentFilter, pageSize = 10 }) |
+@Html.ActionLink("20", "Index", new { sortOrder = Model.SortOrder, currentFilter = Model.CurrentFilter, pageSize = 20 }) |
+@Html.ActionLink("50", "Index", new { sortOrder = Model.SortOrder, currentFilter = Model.CurrentFilter, pageSize = 50 })
+
+<br />
+<br />
+
+@using (Html.BeginForm())
+{
+    <p>
+        Page Size: @Html.TextBox("pageSize", Model.PageSize.ToString(), new { style = "width:50px" })
+        @Html.Hidden("PageSize", Model.PageSize.ToString())
+        @Html.Hidden("SortOrder", Model.SortOrder.ToString())
+        <input type="submit" value="Submit" />
+    </p>
+}
+
+IIS Version: @HttpRuntime.IISVersion

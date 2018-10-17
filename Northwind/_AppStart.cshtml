@@ -1,0 +1,25 @@
+﻿<!--
+  With ASP.NET, the common way to hide sensitive information (database passwords, email passwords, etc.) 
+  is to keep the information in a separate file named "_AppStart".        
+
+  To specify the virtual root in programming code, use the ~ operator.
+
+  The Server.MapPath method converts a virtual path (/default.cshtml) to a physical path that the server 
+  can understand (C:\Johnny\MyWebSited\Demo\default.cshtml).
+
+  You will use Server.MapPath when you need to open data files located on the server (data files can only be 
+  accessed with a full physical path):
+
+-->
+
+<img src="/images/file.jpg" alt="description" />
+
+<link rel="stylesheet" type="text/css" href="/Shared/Site.css" />
+
+@{
+    WebMail.SmtpServer = "mailserver.example.com";
+    WebMail.EnableSsl = true;
+    WebMail.UserName = "username@example.com";
+    WebMail.Password = "your-password";
+    WebMail.From = "your-name-here@example.com";
+}

@@ -1,0 +1,170 @@
+﻿@model Northwind.Models.CustomerVM
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Customer</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CustomerID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustomerID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContactName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContactName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContactTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContactTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.City)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Region)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Region)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PostalCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PostalCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Country)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Country)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fax)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fax)
+        </dd>
+
+    </dl>
+</div>
+
+@* Display a list of the orders for the given customer. *@ 
+@if (Model.Orders != null)
+{
+    <h3>Orders</h3>
+    <table class="table">
+        <tr>
+            <th></th>
+            <th>OrderID</th>
+            <th>EmployeeID</th>
+            <th>OrderDate</th>
+            <th>RequiredDate</th>
+            <th>ShippedDate</th>
+        </tr>
+
+        @foreach (var item in Model.Orders)
+        {
+            string selectedRow = "";
+            if (item.OrderID == Model.SelectedOrderID)
+            {
+                selectedRow = "success";
+            }
+            <tr class="@selectedRow">
+                <td>
+                    @Html.ActionLink("Select", "Details", new { selectedOrderID = item.OrderID, page = Model.Page, pageSize = Model.PageSize })
+                </td>
+                <td>@item.OrderID</td>
+                <td>@item.Employee.FullName</td>
+                <td>@item.OrderDate</td>
+                <td>@item.RequiredDate</td>
+                <td>@item.ShippedDate</td>
+            </tr>
+        }
+
+    </table>
+}
+
+@* Display a list of the order details for the selected order. *@
+@if (Model.OrderDetails != null)
+{
+    <h3>Order Details</h3>
+    <table class="table">
+        <tr>
+            <th>OrderID</th>
+            <th>ProductID</th>
+            <th>Unit Price</th>
+            <th>Quantity</th>
+            <th>Discount</th>
+        </tr>
+
+        @foreach (var item in Model.OrderDetails)
+        {
+            <tr>
+                <td>@item.OrderID</td>
+                <td>@item.Product.ProductName</td>
+                <td>@item.UnitPrice</td>
+                <td>@item.Quantity</td>
+                <td>@item.Discount</td>
+            </tr>
+        }
+
+    </table>
+}
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CustomerID, page = Model.Page, pageSize = Model.PageSize }) |
+    @Html.ActionLink("Back to List", "Index", new { page = Model.Page, pageSize = Model.PageSize })
+</p>

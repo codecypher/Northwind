@@ -1,0 +1,129 @@
+﻿@*model IEnumerable<Northwind.Models.Employee>*@
+@model Northwind.Models.EmployeeIndexVM
+
+@{
+    ViewBag.Title = "Employees";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@using (Html.BeginForm("Index","Employees", FormMethod.Get))
+{
+    <p>
+        @*Html.DropDownList("SelectedCountry", "All")*@
+        @Html.DisplayNameFor(m => m.SelectedCountry)
+        @Html.DropDownListFor(m => m.SelectedCountry, Model.Countries)
+        <input type="submit" value="Filter" />
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            EmployeeID
+            @*Html.DisplayNameFor(model => model.LastName)*@
+        </th>
+        <th>
+            FullName
+            @*Html.DisplayNameFor(model => model.FullName)*@
+        </th>
+        <th>
+            Title
+            @*Html.DisplayNameFor(model => model.Title)*@
+        </th>
+        <th>
+            BirthDate
+            @*Html.DisplayNameFor(model => model.BirthDate)*@
+        </th>
+        <th>
+            HireDate
+            @*Html.DisplayNameFor(model => model.HireDate)*@
+        </th>
+        <th>
+            City
+            @*Html.DisplayNameFor(model => model.City)*@
+        </th>
+        <th>
+            Region
+            @*Html.DisplayNameFor(model => model.Region)*@
+        </th>
+        <th>
+            PostalCode
+            @*Html.DisplayNameFor(model => model.PostalCode)*@
+        </th>
+        <th>
+            Country
+            @*Html.DisplayNameFor(model => model.Country)*@
+        </th>
+        <th>
+            HomePhone
+            @*Html.DisplayNameFor(model => model.HomePhone)*@
+        </th>
+        <th>
+            Extension
+            @*Html.DisplayNameFor(model => model.Extension)*@
+        </th>
+        <th>
+            ReportsTo
+            @*@Html.DisplayNameFor(model => model.ReportsTo)*@
+        </th>
+        <th>
+            @*Html.DisplayNameFor(model => model.Notes)*@
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.EmployeeList) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmployeeID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BirthDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HireDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.City)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Region)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PostalCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Country)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HomePhone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Extension)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReportsTo)
+        </td>
+        <td>
+            @*Html.DisplayFor(modelItem => item.Notes)*@
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.EmployeeID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.EmployeeID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.EmployeeID })
+        </td>
+    </tr>
+}
+
+</table>
